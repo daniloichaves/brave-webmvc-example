@@ -19,6 +19,13 @@
   </properties>
 
   <dependencies>
+<!--   	Inclusao do Kakfa Sender -->
+	<dependency>
+  		<groupId>io.zipkin.reporter</groupId>
+	 	<artifactId>zipkin-sender-kafka10</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+  
     <dependency>
       <groupId>io.zipkin.brave</groupId>
       <artifactId>brave</artifactId>

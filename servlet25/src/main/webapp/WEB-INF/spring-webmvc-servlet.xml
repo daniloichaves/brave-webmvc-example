@@ -9,7 +9,13 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd">
-
+        
+<!--    NOME zipkin      -->
+  <bean id="sender-kafka" class="zipkin.reporter.kafka10.KafkaSender" factory-method="create"
+      destroy-method="close">
+    <constructor-arg type="String" value="http://localhost:9411/api/v1/spans"/>
+  </bean>
+  
   <bean id="sender" class="zipkin.reporter.okhttp3.OkHttpSender" factory-method="create"
       destroy-method="close">
     <constructor-arg type="String" value="http://localhost:9411/api/v1/spans"/>
@@ -19,7 +25,8 @@
     <property name="localServiceName" value="brave-webmvc-example"/>
     <property name="reporter">
       <bean class="brave.spring.beans.AsyncReporterFactoryBean">
-        <property name="sender" ref="sender"/>
+<!--         <property name="sender" ref="sender"/> -->
+        <property name="sender" ref="sender-kafka"/>
         <!-- wait up to half a second for any in-flight spans on close -->
         <property name="closeTimeout" value="500"/>
       </bean>
